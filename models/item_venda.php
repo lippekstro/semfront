@@ -15,13 +15,25 @@ class ItemVenda
             $sql = "SELECT i.*, c.nome as nome_cliente, p.nome as nome_produto, v.data_venda FROM item_venda i 
             join vendas v on i.id_venda = v.id_venda 
             join clientes c on v.id_cliente = c.id_cliente 
-            join produtos p on i.id_produto = p.id_produto";
+            join produtos p on i.id_produto = p.id_produto
+            order by v.data_venda";
             $stmt = $conexao->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+    }
+
+    public function inserir($conexao)
+    {
+        $sql = "INSERT INTO item_venda (id_venda, id_produto, quantidade, preco_unt) VALUES (:venda, :produto, :quantidade, :preco)";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindValue(':venda', $this->getIdVenda());
+        $stmt->bindValue(':produto', $this->getIdProduto());
+        $stmt->bindValue(':quantidade', $this->getQuantidade());
+        $stmt->bindValue(':preco', $this->getPrecoUnt());
+        return $stmt->execute();
     }
 
     public function getId()

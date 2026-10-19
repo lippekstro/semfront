@@ -1,6 +1,7 @@
 <?php
 
-class Venda {
+class Venda
+{
     private $id_venda;
     private $data_venda;
     private $id_cliente;
@@ -17,6 +18,17 @@ class Venda {
             echo $e->getMessage();
         }
     }
+
+    public function inserir($conexao)
+    {
+        $sql = "INSERT INTO vendas (id_cliente) VALUES (:cliente)";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindValue(':cliente', $this->getIdCliente());
+        $stmt->execute();
+        // retorna o ID da venda que acabou de ser cadastrada
+        return $conexao->lastInsertId();
+    }
+
 
     public function getId()
     {

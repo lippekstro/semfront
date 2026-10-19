@@ -21,9 +21,13 @@ $items = ItemVenda::listar();
     <title>Sem Front</title>
 
     <style>
-        table, tr, td, th {
+        table, td, th {
             padding: 1rem;
+            border: 1px solid black;
+            border-collapse: collapse;
         }
+
+
     </style>
 </head>
 <body>
@@ -59,7 +63,7 @@ $items = ItemVenda::listar();
         <?php foreach($produtos as $produto): ?>
             <tr>
                 <td><?= $produto['nome'] ?></td>
-                <td><?= $produto['preco'] ?></td>
+                <td><?= number_format($produto['preco'], 2, ',', '.') ?></td>
                 <td><?= $produto['estoque'] ?></td>
                 <td><?= $produto['nome_produto'] ?></td>
                 <td><a href="#">Editar</a></td>
@@ -94,7 +98,7 @@ $items = ItemVenda::listar();
         <tr>
             <th>Data</th>
             <th>Cliente</th>
-            <th colspan="2"><a href="#">Adicionar</a></th>
+            <th colspan="2"><a href="/semfront/views/cadastrar_venda.php">Adicionar</a></th>
         </tr>
         <?php foreach($vendas as $venda): ?>
             <tr>
@@ -124,8 +128,8 @@ $items = ItemVenda::listar();
                 <td><?= $item['nome_cliente'] ?></td>
                 <td><?= $item['nome_produto'] ?></td>
                 <td><?= $item['quantidade'] ?></td>
-                <td><?= $item['preco_unt'] ?> R$</td>
-                <td><?= $item['quantidade'] * $item['preco_unt'] ?> R$</td>
+                <td><?= number_format($item['preco_unt'], 2, ',', '.')?> R$</td>
+                <td><?= number_format($item['quantidade'] * $item['preco_unt'], 2, ',', '.') ?> R$</td>
             </tr>
         <?php endforeach; ?>
     </table>
